@@ -11,9 +11,9 @@ const soundKey = "sound";
 const defaultSound = "sounds/gong.mp3";
 
 void main() {
-  Logger.level = Level.debug;
-
-  runApp(const MyApp());
+    Logger.level = Level.debug;
+    WidgetsFlutterBinding.ensureInitialized();
+    runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -57,7 +57,6 @@ class _MyHomePageState extends State<MyHomePage> {
   SharedPreferences? _preferences;
   String _sound = "sounds/gong.mp3";
   Timer? _countdown;
-
   @override
   void initState() {
     super.initState();
@@ -105,6 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.question_mark),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Version: ${const String.fromEnvironment('name')}")));
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -143,6 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ? const Icon(Icons.play_arrow)
             : const Icon(Icons.stop),
       ),
+
     );
   }
 }
