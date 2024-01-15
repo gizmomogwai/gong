@@ -3,6 +3,10 @@
   task "build-#{target}" do
     sh "flutter build #{target} --dart-define=name=#{`git describe --always --dirty`.strip} --release"
   end
+  desc "Run #{target}"
+  task "run-#{target}" do
+    sh "flutter run --device-id=#{target} --dart-define=name=#{`git describe --always --dirty`.strip}"
+  end
 end
 
 desc "Deploy web"
