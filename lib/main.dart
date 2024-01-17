@@ -11,9 +11,9 @@ const soundKey = "sound";
 const defaultSound = "sounds/gong.mp3";
 
 void main() {
-    Logger.level = Level.debug;
-    WidgetsFlutterBinding.ensureInitialized();
-    runApp(const MyApp());
+  Logger.level = Level.debug;
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -67,9 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
     _preferences = await SharedPreferences.getInstance();
     setState(() {
       _duration = Duration(seconds: _preferences!.getInt(durationKey) ?? 0);
-      log.d("Duration from prefs: ${_duration}");
+      log.d("Duration from prefs: $_duration");
       _sound = _preferences!.getString(soundKey) ?? 'sounds/gong.mp3';
-      log.d("Sound from prefs: ${_sound}");
+      log.d("Sound from prefs: $_sound");
     });
   }
 
@@ -106,9 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.question_mark),
+            icon: const Icon(Icons.question_mark),
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Version: ${const String.fromEnvironment('name')}")));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                      "Version: ${const String.fromEnvironment('name')}")));
             },
           )
         ],
@@ -126,7 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       _preferences!.setInt(durationKey, val.inSeconds);
                       setState(() => _duration = val);
                     },
-                    snapToMins: 5.0,
                   )
                 : Text("Time remaining: ${_remaining.inSeconds}s"),
             DropdownButton(
@@ -150,7 +151,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ? const Icon(Icons.play_arrow)
             : const Icon(Icons.stop),
       ),
-
     );
   }
 }
